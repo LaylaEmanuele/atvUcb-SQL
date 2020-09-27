@@ -1,0 +1,165 @@
+Criar o banco vacinas
+
+DDL (Data Definition Language );
+
+create database vacinas_covid;
+
+create database com mais opções:
+
+create database vacinas_covid;
+default character set utf8
+default collate utf8_general_ci;
+
+
+use vacinascovid; //seleciona o banco de dados no MySQL
+
+Outros comandos:
+show database; //lista os banco de dados criados
+show tables; //mostra as tabelas do datase
+describe ou desc "nome da tabela"; //descreve os itens da tabela
+
+CREATE TABLE vacinas(
+ id int NOT NULL AUTO_INCREMENT,
+ nome VARCHAR(45) NOT NULL,
+ pais_id int NOT NULL,
+ PRIMARY KEY (id),
+ FOREIGN KEY (pais_id) REFERENCES Paises (id)
+);
+
+CREATE TABLE paises (  
+	id INT NOT NULL AUTO_INCREMENT,
+	nome VARCHAR(100) NOT NULL UNIQUE,
+	PRIMARY KEY (id) 
+)
+
+CREATE TABLE cientistas (
+	id INT NOT NULL, 
+    nome VARCHAR(100) NOT NULL, 
+    pais_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (pais_id) REFERENCES paises (id)
+);
+
+CREATE TABLE sintomas (
+	id INT NOT NULL AUTO_INCREMENT, 
+    nome VARCHAR(100) NOT NULL UNIQUE, 
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE voluntarios (
+id INT NOT NULL AUTO_INCREMENT,
+nome VARCHAR(100) NOT NULL,
+endereco VARCHAR(200),
+cidade VARCHAR(100),
+estado CHAR(2) NOT NULL,
+profissao VARCHAR(100),
+dataNascimento DATE NOT NULL,
+infectado BOOLEAN,
+curado BOOLEAN,
+pais_id INT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (pais_id) REFERENCES paises (id)
+);
+
+CREATE TABLE voluntariosSintomas (
+id INT NOT NULL AUTO_INCREMENT,
+voluntarios_id INT NOT NULL,
+sintomas_id INT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (voluntarios_id) REFERENCES voluntarios (id),
+FOREIGN KEY (sintomas_id) REFERENCES sintomas (id)
+);
+
+
+
+Excluir database 
+DROP DATABASE databasename;
+
+Excluir tabela
+DROP TABLE table_name;
+
+
+Alterar tabela 
+
+Incluir coluna:
+
+ALTER TABLE vacinas
+ADD FOREIGN KEY (pais_id) REFERENCES Paises (id);
+
+ALTER TABLE vacinas
+ADD nome2 varchar(110) after nome;
+
+ALTER TABLE vacinas
+ADD nome2 varchar(110) first;
+
+
+Modificar coluna
+ALTER TABLE vacinas  
+MODIFY COLUMN nome VARCHAR(100);
+
+Modificar nome da coluna
+ALTER TABLE paises
+CHANGE COLUMN nome nomePais varchar (110);
+
+Excluir coluna
+ALTER TABLE paises
+DROP COLUMN nomePais;
+
+
+Opções: 
+
+CREATE TABLE if not exists sintomas2 (
+	id INT NOT NULL AUTO_INCREMENT, 
+    nome VARCHAR(100) NOT NULL UNIQUE, 
+    PRIMARY KEY (id)
+) default charset=utf8; 
+
+DROP TABLE if exists sintomas2;
+
+
+DML (Data Manipulation Language );
+
+INSERT INTO paises (id, nome)
+VALUE (default, 'França');
+
+INSERT INTO paises
+VALUE (default, 'Brasil');
+
+INSERT INTO voluntarios (id, nome, pais_id, estado, dataNascimento)
+VALUE (default, 'joyce', 1, 'GO', '2020-12-12');
+
+INSERT INTO paises
+VALUE 
+(default, 'EUA'),
+(default, 'Mexico'),
+(default, 'Canada');
+
+INSERT INTO cientistas
+VALUE (default, 'cientista1', 1, '123');
+
+UPDATE cientistas
+SET nome = 'cientista2'
+WHERE id = 1;
+
+UPDATE cientistas
+SET nome = 'cientista3', crm = '456'
+WHERE id = 1;
+
+UPDATE cientistas
+SET nome = 'cientista3', crm = '456'
+WHERE id = 1;
+
+FALAR DO IS NULL E IS NOT NULL
+
+DELETE FROM voluntarios
+WHERE nome='joyce' and id = 1;
+
+Edit -> Preferences - SQL Editor - Safe Updates
+DELETE FROM voluntarios
+WHERE nome='joyce';
+
+Excluir campos depois do update - não pode haver dependencias
+TRUNCATE TABLE table_name;
+
+
+/*comentario*/
