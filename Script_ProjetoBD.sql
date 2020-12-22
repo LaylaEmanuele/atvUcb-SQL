@@ -319,3 +319,29 @@ select nome from bibliotecarios where Livros_idLivro = 6; -- ver qual biblioteca
 
 select idLivro,titulo FROM livros where idLivro IN (SELECT Livros_idLivro FROM alugueis inner join livros on livros.idLivro = alugueis.Livros_idLivro where livros.idLivro <= 30) ORDER BY idLivro;
 
+USE biblioteca;
+SELECT idAluguel,
+CASE
+WHEN dayname(dataEmprestimo) = "Monday" THEN "Segunda-feira"
+WHEN dayname(dataEmprestimo) = "Tuesday" THEN "Terça-feira"
+WHEN dayname(dataEmprestimo) = "Wednesday" THEN "Quarta-feira"
+WHEN dayname(dataEmprestimo) = "Thursday" THEN "Quinta-feira"
+WHEN dayname(dataEmprestimo) = "Friday" THEN "Sexta-feira"
+WHEN dayname(dataEmprestimo) = "Saturday" THEN "Sábado"
+WHEN dayname(dataEmprestimo) = "Sunday" THEN "Domingo"
+END AS nomeDia
+FROM alugueis;
+
+USE biblioteca;
+CREATE OR REPLACE VIEW listaLivros AS
+SELECT titulo, localizacao FROM livros;
+
+SELECT * FROM listaLivros;
+
+-- delimiter $$
+-- create procedure listarCriancas()
+-- begin
+-- 	select nomeCrianca from tb_crianca;
+-- end $$
+-- delimiter ;
+-- call listarCriancas(); 
